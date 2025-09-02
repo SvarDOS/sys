@@ -69,3 +69,6 @@ clean: .SYMBOLIC
 	rm -f boot/fat32lba.bin
 	rm -f *.lst
 	rm -f bin2c.exe
+	rm -f bin2c.obj
+	rm -f bin2c.o
+

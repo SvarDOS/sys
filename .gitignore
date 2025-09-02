@@ -1,2 +1,14 @@
-# exclude Mac crap
+# exclude build artifacts
+*.exe
+*.obj
+*.o
+*.map
+*.lst
+*.bin
+fat12com.h
+fat16com.h
+fat32chs.h
+fat32lba.h
+
+# exclude MacOS crap
 .DS_Store
