@@ -485,7 +485,7 @@ cluster_next:   lodsw                   ; AX = next cluster to read
 boot_error:     
 call            show
 ;               db      "Error! Hit a key to reboot.",0
-                db      "):",0
+                db      "E!",0
 %ifdef LOOPONERR
 jmp $
 %else

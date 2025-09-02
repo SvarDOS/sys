@@ -420,7 +420,7 @@ msg_LoadFreeDOS db "Loading SvarDOS ",0
 %endif
        times 0x01ee-$+$$ db 0
 
-msg_BootError	db "No "
+msg_BootError	db "E! "
 		; currently, only "kernel.sys not found" gives a message,
 		; but read errors in data or root or fat sectors do not.
 
