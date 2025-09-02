@@ -413,7 +413,7 @@ no_incr_es:	pop	di
 
 ;-----------------------------------------------------------------------
 
-msg_LoadFreeDOS db "Loading FreeDOS ",0
+msg_LoadFreeDOS db "Loading SvarDOS ",0
 
        times 0x01ee-$+$$ db 0
 
@@ -426,3 +426,4 @@ filename	db "KERNEL  SYS"
 
 sign		dw 0, 0xAA55
 		; Win9x uses all 4 bytes as magic value here.
+
