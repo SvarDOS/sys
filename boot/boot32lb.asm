@@ -413,8 +413,11 @@ no_incr_es:	pop	di
 
 ;-----------------------------------------------------------------------
 
+%ifdef SVARDOS
 msg_LoadFreeDOS db "Loading SvarDOS ",0
-
+%else
+msg_LoadFreeDOS db "Loading SvarDOS ",0
+%endif
        times 0x01ee-$+$$ db 0
 
 msg_BootError	db "No "
