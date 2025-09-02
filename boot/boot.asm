@@ -172,6 +172,8 @@ Entry:          jmp     short real_start
 
 %define data_start      PARAMS+0x0a        ; first data sector
 
+%define retries         PARAMS+0x0e        ; read retries before bailing out
+
 
 ;-----------------------------------------------------------------------
 ;   ENTRY
@@ -411,12 +413,15 @@ show:           pop     si
                 jne     .do_show                ; until done
                 ret
 
-boot_error:     call    show
-;                db      "Error! Hit a key to reboot.",0
-                db      "Error!",0
-
+read_error:
                 xor     ah,ah
                 int     0x13                    ; reset floppy
+                dec     byte [retries]
+                jnz     read_next
+boot_error:     
+                call    show
+;                db      "Error! Hit a key to reboot.",0
+                db      "E!",0
                 int     0x16                    ; wait for a key
                 int     0x19                    ; reboot the machine
 
@@ -432,16 +437,19 @@ boot_error:     call    show
 
 readDisk:       push    si
 
+                mov     byte [retries],3
                 mov     LBA_SECTOR_0,ax
                 mov     LBA_SECTOR_16,dx
                 mov     word [READADDR_SEG], es
                 mov     word [READADDR_OFF], bx
 
+%if 0   ; no space for this!
 %ifndef QUIET
                 call    show
                 db      ".",0
 %else ; ensure code after this still at same location
 				times 5 nop
+%endif
 %endif
 read_next:
 
@@ -527,7 +535,7 @@ read_normal_BIOS:
 do_int13_read:                
                 mov     dl, [drive]
                 int     0x13
-                jc      boot_error              ; exit on error
+                jc      read_error              ; exit on error
 
                 mov     ax, word [bsBytesPerSec]  
 
