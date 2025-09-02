@@ -1,0 +1,10 @@
+# SvarDOS SYS utility
+
+Based on SYS provided as part the FreeDOS kernel repository. You find the
+original code at https://github.com/FDOS/kernel.
+
+This code is forked from commit 80d140984b3b5e74608842962173623490fc4eda
+of the original repository.
+
+Distributed under the GNU Public License, version 2.
+See COPYING for licensing conditions.
