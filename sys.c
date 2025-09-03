@@ -31,8 +31,12 @@
 /* #define WITHOEMCOMPATBS */ /* include support for OEM MS/PC DOS 3.??-6.x */
 /* #define FDCONFIG /*        /* include support to configure FD kernel */
 
-#define SYS_VERSION "v3.6f"
-#define SYS_NAME "DOS System Installer "
+#define SYS_VERSION "v3.7"
+#ifdef SVARDOS
+#define SYS_NAME "SvarDOS System Installer "
+#else
+#define SYS_NAME "FreeDOS System Installer "
+#endif
 
 #include <stdlib.h>
 #ifndef __GNUC__
@@ -510,24 +514,28 @@ void showHelpAndExit(void)
       "  /BOOTONLY: do *not* copy kernel / shell, only update boot sector or image\n"
       "  /UPDATE  : copy kernel and update boot sector (do *not* copy shell)\n"
       "  /OEM     : indicates boot sector, filenames, and load segment to use\n"
-      "             /OEM:FD       FreeDOS settings\n"
+      "             /OEM:FD       FreeDOS / Enhanced DR-DOS (KERNEL.SYS)\n"
       "             /OEM:EDR      Enhanced DR-DOS (DRBIO.SYS and DRDOS.SYS)\n"
+#ifndef SVARDOS
       "             /OEM:LEDRPACK Enhanced DR-DOS (EDRPACK.SYS, lDOS drload)\n"
       "             /OEM:LEDR     Enhanced DR-DOS (EDRDOS.COM, lDOS iniload)\n"
       "             /OEM:LMSPACK  OSS MS-DOS (LMSPACK.SYS, lDOS drload)\n"
       "             /OEM:LMS      OSS MS-DOS (LMSDOS.COM, lDOS iniload)\n"
       "             /OEM:OPENDOS  Caldera OpenDOS 7.01 (and Novell DOS 7),\n"
       "                           DR-DOS 7.02 - 7.03, 7.01.01 - 7.01.06\n"
-#ifdef WITHOEMCOMPATBS
+#  ifdef WITHOEMCOMPATBS
       "             /OEM:PC       PC-DOS, DR DOS 5 - Novell DOS 7\n"
       "             /OEM:MS       MS-DOS\n"
       "             /OEM:W9x      MS Win9x DOS\n"
+#  endif
 #endif
       "             default is /OEM[:AUTO], select DOS based on existing files\n"
       "  /K name  : name of kernel to use in boot sector instead of %s\n"
       "  /L segm  : hex load segment to use in boot sector instead of %02x\n"
       "  /B btdrv : hex BIOS # of boot drive set in bs, 0=A:, 80=1st hd,...\n"
       "  /FORCE   : override automatic selection of BIOS related settings\n"
+      "             /FORCE:CHS use CHS in bootsector\n"
+      "             /FORCE:LBA use LBA in bootsector\n"
       "             /FORCE:BSDRV use boot drive # set in bootsector\n"
       "             /FORCE:BIOSDRV use boot drive # provided by BIOS\n"
       "  /NOBAKBS : skips copying boot sector to backup bs, FAT32 only else ignored\n"
